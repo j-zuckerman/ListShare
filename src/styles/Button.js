@@ -12,6 +12,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   border: none;
+  text-decoration: none;
 `;
 
 export default Button;
