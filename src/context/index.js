@@ -2,8 +2,23 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const ListContext = createContext();
 
+let listOfItems = [
+  {
+    description: 'test1',
+    id: 1,
+    isCompleted: false,
+  },
+  {
+    description: 'test2',
+    id: 2,
+    isCompleted: true,
+  },
+];
+
+let dummyList = { name: 'List1', items: listOfItems };
+
 const ListProvider = ({ children }) => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(null);
   const [isOpen, toggle] = useState(false);
 
   function toggleModal() {
@@ -12,7 +27,9 @@ const ListProvider = ({ children }) => {
 
   async function createList() {}
 
-  async function fetchList(listId) {}
+  async function fetchList(listId) {
+    setList(dummyList);
+  }
 
   async function editList(listId) {}
 
