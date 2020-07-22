@@ -1,18 +1,38 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import Button from '../styles/Button';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
+import { Modal } from '../components/Modal';
+import { ListContext } from '../context';
 
 const Home = () => {
+  const { list, createList, isOpen, toggleModal } = useContext(ListContext);
+
+  const history = useHistory();
+
+  const navigateToListPage = () => {
+    createList();
+    history.push('/list/1');
+  };
+
   return (
-    <main>
+    <>
       <NavBar></NavBar>
-      <h1>Share lists</h1>
-      <Button as={Link} to="/list/1">
-        Create New List
-      </Button>
-      <Button>Open Existing List</Button>
-    </main>
+      <main style={{ marginTop: '6.5rem', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2.8rem' }}>
+          A quick and easy way to share any type of list.
+        </h1>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button large colored onClick={navigateToListPage}>
+            Create New List
+          </Button>
+          <p> OR</p>
+          <Button large onClick={toggleModal}>
+            Open Existing List
+          </Button>
+        </div>
+      </main>
+    </>
   );
 };
 

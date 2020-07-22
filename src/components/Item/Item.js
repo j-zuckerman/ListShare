@@ -8,7 +8,7 @@ export const Item = ({ data }) => {
   const [isCompleted, setCompleted] = useState(data.isCompleted);
 
   const handleCheckboxChange = (event) => {
-    setCompleted(event.target.value);
+    setCompleted(event.target.checked);
   };
 
   const handleDescriptionChange = (event) => {
