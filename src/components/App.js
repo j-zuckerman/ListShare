@@ -7,16 +7,16 @@ import ListProvider from '../context';
 
 function App() {
   return (
-    <div className="App">
-      <ListProvider>
+    <ListProvider>
+      <div className="App">
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/list/:id" component={ListPage} />
           </Switch>
         </Router>
-      </ListProvider>
-    </div>
+      </div>
+    </ListProvider>
   );
 }
 

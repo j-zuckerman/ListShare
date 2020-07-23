@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Button from '../../styles/Button';
 
 export const List = () => {
-  const { fetchList, list } = useContext(ListContext);
+  const { fetchList, list, toggleModal } = useContext(ListContext);
   let { id } = useParams();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const List = () => {
         <h3 style={{ textAlign: 'center', fontSize: '2rem' }}>{list.name}</h3>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button>Edit Name</Button>
+          <Button onClick={() => toggleModal('EDIT')}>Edit Name</Button>
           <Button colored>Copy Link</Button>
         </div>
         <div>
@@ -34,7 +34,9 @@ export const List = () => {
             justifyContent: 'center',
           }}
         >
-          <Button colored>Add Item</Button>
+          <Button colored onClick={() => toggleModal('ADD')}>
+            Add Item
+          </Button>
         </div>
       </div>
     );

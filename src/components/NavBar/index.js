@@ -26,7 +26,7 @@ export const NavBar = () => {
           <Button colored onClick={navigateToListPage}>
             New List
           </Button>
-          <Button onClick={toggleModal}>Open List</Button>
+          <Button onClick={() => toggleModal('OPEN')}>Open List</Button>
         </Navbar.RightSide>
       </Navbar>
     </>
