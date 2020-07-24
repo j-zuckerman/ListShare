@@ -19,6 +19,9 @@ let dummyList = { name: 'List1', items: listOfItems };
 
 const ListProvider = ({ children }) => {
   const [list, setList] = useState(null);
+  const [listId, setListId] = useState(null);
+  const [items, setItems] = useState(null);
+
   const [isOpen, toggle] = useState(false);
   const [modalType, setModalType] = useState('');
 
@@ -28,7 +31,7 @@ const ListProvider = ({ children }) => {
   }
 
   async function createList() {
-    const response = await fetch(
+    const listResponse = await fetch(
       'https://node-list-share.herokuapp.com/api/list/',
       {
         method: 'POST',
@@ -36,12 +39,37 @@ const ListProvider = ({ children }) => {
         body: JSON.stringify({ title: 'Unnamed List' }),
       }
     );
+    let listData = await listResponse.json();
+    console.log(listData);
+    setListId(listData.list_id);
 
-    console.log(response);
+    const itemResponse = await fetch(
+      `https://node-list-share.herokuapp.com/api/list/${listData.list_id}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: 'Unnamed item', isDone: 'false' }),
+      }
+    );
+    console.log(itemResponse);
   }
 
   async function fetchList(listId) {
-    setList(dummyList);
+    const listResponse = await fetch(
+      `https://node-list-share.herokuapp.com/api/list/${listId}`
+    );
+    let listData = await listResponse.json();
+    console.log(listData);
+    setList(listData);
+    console.log(list);
+
+    const itemResponse = await fetch(
+      `https://node-list-share.herokuapp.com/api/list/${listId}/items`
+    );
+    let itemData = await itemResponse.json();
+    console.log(itemData);
+    setItems(itemData);
+    console.log(items);
   }
 
   async function editList(listId) {}
@@ -69,6 +97,8 @@ const ListProvider = ({ children }) => {
         addItem,
         deleteItem,
         editList,
+        items,
+        listId,
       }}
     >
       {children}

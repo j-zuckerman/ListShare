@@ -5,28 +5,28 @@ import { useParams } from 'react-router-dom';
 import Button from '../../styles/Button';
 
 export const List = () => {
-  const { fetchList, list, toggleModal } = useContext(ListContext);
+  const { list, items, toggleModal, fetchList } = useContext(ListContext);
   let { id } = useParams();
 
   useEffect(() => {
     fetchList(id);
   }, [id]);
 
-  if (list) {
+  if (list !== null && items !== null)
     return (
       <div>
-        <h3 style={{ textAlign: 'center', fontSize: '2rem' }}>{list.name}</h3>
+        <h3 style={{ textAlign: 'center', fontSize: '2rem' }}>
+          {list.list_title}
+        </h3>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button onClick={() => toggleModal('EDIT')}>Edit Name</Button>
+          <Button onClick={() => toggleModal('EDIT')}>Edit Title</Button>
           <Button colored>Copy Link</Button>
         </div>
-        <div>
-          {list.items.map((item) => (
-            <Item data={item}></Item>
-          ))}
-        </div>
-
+        <div></div>
+        {items.map((item) => (
+          <Item data={item}></Item>
+        ))}
         <div
           style={{
             marginTop: '1rem',
@@ -40,5 +40,5 @@ export const List = () => {
         </div>
       </div>
     );
-  } else return null;
+  else return null;
 };
