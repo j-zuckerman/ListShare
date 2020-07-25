@@ -54,9 +54,9 @@ const ListProvider = ({ children }) => {
     console.log(itemResponse);
   }
 
-  async function fetchList(listId) {
+  async function fetchList(id) {
     const listResponse = await fetch(
-      `https://node-list-share.herokuapp.com/api/list/${listId}`
+      `https://node-list-share.herokuapp.com/api/list/${id}`
     );
     let listData = await listResponse.json();
     console.log(listData);
@@ -64,21 +64,56 @@ const ListProvider = ({ children }) => {
     console.log(list);
 
     const itemResponse = await fetch(
-      `https://node-list-share.herokuapp.com/api/list/${listId}/items`
+      `https://node-list-share.herokuapp.com/api/list/${id}/items`
     );
     let itemData = await itemResponse.json();
     console.log(itemData);
     setItems(itemData);
-    console.log(items);
   }
 
-  async function editList(listId) {}
+  async function editList(id, listTitle) {
+    const response = await fetch(
+      `https://node-list-share.herokuapp.com/api/list/${id}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: listTitle }),
+      }
+    );
 
-  async function addItem(listId) {}
+    setList({ ...list, list_title: listTitle });
+  }
 
-  async function markItem(itemId) {}
+  async function addItem(id) {
+    const response = await fetch(
+      `https://node-list-share.herokuapp.com/api/list/${id}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: 'Unnamed item', isDone: 'false' }),
+      }
+    );
+  }
 
-  async function editItem(itemId) {}
+  async function editItem(id, isDone, name) {
+    const response = await fetch(
+      `https://node-list-share.herokuapp.com/api/items/${id}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isDone, name }),
+      }
+    );
+    console.log(id, isDone, name);
+    console.log(items);
+    setItems(
+      items.map((item) =>
+        item.item_id === id
+          ? { ...item, isdone: isDone, item_name: name }
+          : item
+      )
+    );
+  }
 
   async function deleteItem(itemId) {}
 
@@ -92,7 +127,6 @@ const ListProvider = ({ children }) => {
         createList,
         fetchList,
         addItem,
-        markItem,
         editItem,
         addItem,
         deleteItem,

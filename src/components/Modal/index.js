@@ -2,41 +2,76 @@ import React, { useState, useContext } from 'react';
 import { ListContext } from '../../context';
 import ModalContainer from '../../styles/Modal';
 import Button from '../../styles/Button';
+import styled from 'styled-components';
+
+const BtnContainer = styled.div`
+  display: flex;
+`;
+
+const ModalTitle = styled.p`
+  font-size: 1.15rem;
+  text-align: center;
+`;
 
 export const Modal = () => {
-  const { isOpen, toggleModal, modalType } = useContext(ListContext);
+  const { isOpen, toggleModal, modalType, list, editList } = useContext(
+    ListContext
+  );
+  const [title, setTitle] = useState('');
+
+  //Event handlers
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+  const handleTitleSubmit = (event) => {
+    if (event.key === 'Enter') {
+      editList(list.list_id, title);
+    }
+  };
 
   if (isOpen && modalType === 'OPEN')
     return (
       <ModalContainer>
-        <p>Open List</p>
+        <ModalTitle>Open List</ModalTitle>
 
-        <Button></Button>
-        <Button colored onClick={toggleModal}>
-          Close
-        </Button>
+        <BtnContainer>
+          <Button>Open List</Button>
+          <Button colored onClick={toggleModal}>
+            Close
+          </Button>
+        </BtnContainer>
       </ModalContainer>
     );
   else if (isOpen && modalType === 'ADD') {
     return (
       <ModalContainer>
-        <p>Add Item</p>
+        <ModalTitle>Add Item</ModalTitle>
 
-        <Button></Button>
-        <Button colored onClick={toggleModal}>
-          Close
-        </Button>
+        <BtnContainer>
+          <Button>Add Item</Button>
+          <Button colored onClick={toggleModal}>
+            Close
+          </Button>
+        </BtnContainer>
       </ModalContainer>
     );
   } else if (isOpen && modalType === 'EDIT') {
     return (
       <ModalContainer>
-        <p>Edit Title</p>
+        <ModalTitle>Edit Title</ModalTitle>
 
-        <Button></Button>
-        <Button colored onClick={toggleModal}>
-          Close
-        </Button>
+        <input
+          type="text"
+          value={title}
+          onKeyDown={handleTitleSubmit}
+          onChange={handleTitleChange}
+        ></input>
+        <BtnContainer>
+          <Button>Change Title</Button>
+          <Button colored onClick={toggleModal}>
+            Close
+          </Button>
+        </BtnContainer>
       </ModalContainer>
     );
   } else return null;
