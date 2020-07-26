@@ -42,20 +42,7 @@ export const Modal = () => {
         </BtnContainer>
       </ModalContainer>
     );
-  else if (isOpen && modalType === 'ADD') {
-    return (
-      <ModalContainer>
-        <ModalTitle>Add Item</ModalTitle>
-
-        <BtnContainer>
-          <Button>Add Item</Button>
-          <Button colored onClick={toggleModal}>
-            Close
-          </Button>
-        </BtnContainer>
-      </ModalContainer>
-    );
-  } else if (isOpen && modalType === 'EDIT') {
+  else if (isOpen && modalType === 'EDIT') {
     return (
       <ModalContainer>
         <ModalTitle>Edit Title</ModalTitle>
@@ -67,7 +54,9 @@ export const Modal = () => {
           onChange={handleTitleChange}
         ></input>
         <BtnContainer>
-          <Button>Change Title</Button>
+          <Button onClick={() => editList(list.list_id, title)}>
+            Change Title
+          </Button>
           <Button colored onClick={toggleModal}>
             Close
           </Button>

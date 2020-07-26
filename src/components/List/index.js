@@ -3,9 +3,12 @@ import { Item } from '../Item/Item';
 import { ListContext } from '../../context';
 import { useParams } from 'react-router-dom';
 import Button from '../../styles/Button';
+import { FaEdit, FaPlus, FaShareAlt } from 'react-icons/fa';
 
 export const List = () => {
-  const { list, items, toggleModal, fetchList } = useContext(ListContext);
+  const { list, items, addItem, toggleModal, fetchList } = useContext(
+    ListContext
+  );
   let { id } = useParams();
 
   useEffect(() => {
@@ -20,8 +23,12 @@ export const List = () => {
         </h3>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button onClick={() => toggleModal('EDIT')}>Edit Title</Button>
-          <Button colored>Copy Link</Button>
+          <Button onClick={() => toggleModal('EDIT')}>
+            <FaEdit className="icon" /> Edit Title
+          </Button>
+          <Button colored>
+            <FaShareAlt className="icon icon_color" /> Copy Link
+          </Button>
         </div>
         <div></div>
         {items.map((item) => (
@@ -34,8 +41,8 @@ export const List = () => {
             justifyContent: 'center',
           }}
         >
-          <Button colored onClick={() => toggleModal('ADD')}>
-            Add Item
+          <Button colored onClick={() => addItem(list.list_id)}>
+            <FaPlus className="icon icon_color" /> Add Item
           </Button>
         </div>
       </div>

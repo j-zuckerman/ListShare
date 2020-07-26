@@ -2,21 +2,6 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const ListContext = createContext();
 
-let listOfItems = [
-  {
-    description: 'test1',
-    id: 1,
-    isCompleted: false,
-  },
-  {
-    description: 'test2',
-    id: 2,
-    isCompleted: true,
-  },
-];
-
-let dummyList = { name: 'List1', items: listOfItems };
-
 const ListProvider = ({ children }) => {
   const [list, setList] = useState(null);
   const [listId, setListId] = useState(null);
@@ -93,6 +78,8 @@ const ListProvider = ({ children }) => {
         body: JSON.stringify({ name: 'Unnamed item', isDone: 'false' }),
       }
     );
+    let data = await response.json();
+    setItems((items) => [...items, data]);
   }
 
   async function editItem(id, isDone, name) {
@@ -104,8 +91,7 @@ const ListProvider = ({ children }) => {
         body: JSON.stringify({ isDone, name }),
       }
     );
-    console.log(id, isDone, name);
-    console.log(items);
+
     setItems(
       items.map((item) =>
         item.item_id === id
@@ -115,7 +101,16 @@ const ListProvider = ({ children }) => {
     );
   }
 
-  async function deleteItem(itemId) {}
+  async function deleteItem(id) {
+    const response = await fetch(
+      `https://node-list-share.herokuapp.com/api/items/${id}`,
+      {
+        method: 'DELETE',
+      }
+    );
+
+    setItems(items.filter((item) => item.item_id !== id));
+  }
 
   return (
     <ListContext.Provider

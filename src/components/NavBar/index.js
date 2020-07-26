@@ -1,34 +1,49 @@
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import { Modal } from '../Modal';
 import { ListContext } from '../../context';
 import Navbar from '../../styles/Navbar';
 import Button from '../../styles/Button';
+import { FaExternalLinkAlt, FaPlus } from 'react-icons/fa';
 
 export const NavBar = () => {
-  const { list, createList, isOpen, toggleModal } = useContext(ListContext);
+  const { list, listId, createList, isOpen, toggleModal } = useContext(
+    ListContext
+  );
+
+  useEffect(() => {
+    createList();
+  }, [listId]);
 
   const history = useHistory();
 
   const navigateToListPage = () => {
-    createList();
-    history.push('/list/1');
+    history.push(`/list/${listId}`);
   };
 
-  return (
-    <>
-      <Modal></Modal>
-      <Navbar>
-        <Navbar.LeftSide>
-          <h2>Share A List</h2>
-        </Navbar.LeftSide>
-        <Navbar.RightSide>
-          <Button colored onClick={navigateToListPage}>
-            New List
-          </Button>
-          <Button onClick={() => toggleModal('OPEN')}>Open List</Button>
-        </Navbar.RightSide>
-      </Navbar>
-    </>
-  );
+  if (listId !== null)
+    return (
+      <>
+        <Modal></Modal>
+        <Navbar>
+          <Navbar.LeftSide>
+            <Link
+              to="/"
+              style={{ textDecoration: 'none', fontSize: '1.65rem' }}
+            >
+              List Share
+            </Link>
+          </Navbar.LeftSide>
+          <Navbar.RightSide>
+            <Button colored onClick={navigateToListPage}>
+              <FaPlus className="icon icon_color" /> New List
+            </Button>
+            <Button onClick={() => toggleModal('OPEN')}>
+              <FaExternalLinkAlt className="icon" /> Open List
+            </Button>
+          </Navbar.RightSide>
+        </Navbar>
+      </>
+    );
+  else return null;
 };

@@ -7,7 +7,7 @@ const Button = styled.button`
   border-radius: 100px;
   box-shadow: 0 1px 5px black;
   color: white;
-  background-color: ${(props) => (props.colored ? '#46afb9' : '#2e3233')};
+  background-color: ${(props) => (props.colored ? '#1f4287' : '#2e3233')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,6 +15,10 @@ const Button = styled.button`
   text-decoration: none;
   margin-right: 20px;
   margin-left: 20px;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 export default Button;

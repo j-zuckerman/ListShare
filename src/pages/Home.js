@@ -10,35 +10,29 @@ const Home = () => {
 
   const history = useHistory();
 
-  const navigateToListPage = async () => {
+  const navigateToListPage = () => {
     history.push(`/list/${listId}`);
   };
 
-  useEffect(() => {
-    createList();
-  }, [listId]);
-
-  if (listId !== null)
-    return (
-      <>
-        <NavBar></NavBar>
-        <main style={{ marginTop: '6.5rem', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '2.8rem' }}>
-            A quick and easy way to share any type of list.
-          </h1>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button large colored onClick={navigateToListPage}>
-              Create New List
-            </Button>
-            <p> OR</p>
-            <Button large onClick={toggleModal}>
-              Open Existing List
-            </Button>
-          </div>
-        </main>
-      </>
-    );
-  else return null;
+  return (
+    <>
+      <NavBar></NavBar>
+      <main style={{ marginTop: '6.5rem', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2.8rem' }}>
+          A quick and easy way to share any type of list.
+        </h1>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button large colored onClick={navigateToListPage}>
+            Create New List
+          </Button>
+          <p> OR</p>
+          <Button large onClick={toggleModal}>
+            Open Existing List
+          </Button>
+        </div>
+      </main>
+    </>
+  );
 };
 
 export default Home;
