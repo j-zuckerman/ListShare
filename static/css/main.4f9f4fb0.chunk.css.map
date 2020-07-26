@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA,EACE,wBAAyB,CACzB,UACF,CAEA,MACE,iBACF,CAEA,YACE,wBACF","file":"main.4f9f4fb0.chunk.css","sourcesContent":["* {\r\n  background-color: #2e3233;\r\n  color: #eeeeee;\r\n}\r\n\r\n.icon {\r\n  margin-right: 10px;\r\n}\r\n\r\n.icon_color {\r\n  background-color: #1f4287;\r\n}\r\n"]}
